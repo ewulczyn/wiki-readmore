@@ -23,13 +23,19 @@ parser.add_argument(
     '--debug', required=False, action='store_true',
     help='run in debug mode'
 )
+parser.add_argument(
+    '--embedding', required=False, default='mini_embedding',
+    help='embedding file'
+)
+
+
 args = parser.parse_args()
 
 app = Flask(__name__)
 app.debug = args.debug
 
 language_pairs = requests.get('https://cxserver.wikimedia.org/v1/languagepairs').json()
-embedding_path = os.path.join(currentdir, '../data/2016-03-01_2016-03-07_wikidata_100') #test_embedding
+embedding_path = os.path.join(currentdir, '../data/%s' % args.embedding)
 
 finder_map = {
     'morelike': MorelikeCandidateFinder(),

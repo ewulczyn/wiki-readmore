@@ -1,5 +1,6 @@
 import numpy as np
 import requests
+from sklearn.preprocessing import normalize
 
 class WikiEmbedding:
 
@@ -20,14 +21,11 @@ class WikiEmbedding:
                 self.w2idx[w] = i
                 self.idx2w.append(w)
                 
-        self.E = self.normalize(self.E)
+        self.E = normalize(self.E)
         self.idx2w = np.array(self.idx2w)
 
 
-    def normalize(self, E):
-        norms = np.linalg.norm(E, axis=1)
-        E = E / norms[:, np.newaxis]
-        return np.nan_to_num(E)
+    
 
     def most_similar(self, w, n=10, min_similarity=0.5):
         """

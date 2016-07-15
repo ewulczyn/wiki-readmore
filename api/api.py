@@ -21,7 +21,7 @@ from lib.pageviews import PageviewGetter
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--debug', required=False, action='store_true',
-    help='run in debug mode'
+    default=False, help='run in debug mode'
 )
 parser.add_argument(
     '--embedding', required=False, default='mini_embedding',

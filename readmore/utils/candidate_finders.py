@@ -2,8 +2,8 @@ import requests
 import random
 from datetime import datetime
 from dateutil import relativedelta
-from lib.embedding import WikiEmbedding, items_to_titles, titles_to_items
-from lib.utils import Article, thread_function, chunk_list
+from .embedding import WikiEmbedding, items_to_titles, titles_to_items
+from .helpers import Article, thread_function, chunk_list
 
 
 class CandidateFinder():

@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 from dateutil import relativedelta
-from lib.utils import thread_function
+from .helpers import thread_function
 
 class PageviewGetter():
     """

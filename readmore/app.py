@@ -7,16 +7,11 @@ import requests
 import time
 from flask import Flask, render_template, request, Response
 
-currentdir = os.path.dirname(
-    os.path.abspath(inspect.getfile(inspect.currentframe()))
-)
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
 
-from lib.candidate_finders import PageviewCandidateFinder, MorelikeCandidateFinder, DeepCandidateFinder
-from lib.embedding import WikiEmbedding
-from lib.filters import apply_filters_chunkwise
-from lib.pageviews import PageviewGetter
+from utils.candidate_finders import PageviewCandidateFinder, MorelikeCandidateFinder, DeepCandidateFinder
+from utils.embedding import WikiEmbedding
+from utils.filters import apply_filters_chunkwise
+from utils.pageviews import PageviewGetter
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -35,7 +30,7 @@ app = Flask(__name__)
 app.debug = args.debug
 
 language_pairs = requests.get('https://cxserver.wikimedia.org/v1/languagepairs').json()
-embedding_path = os.path.join(currentdir, '../data/%s' % args.embedding)
+embedding_path = os.path.join('data/%s' % args.embedding)
 
 finder_map = {
     'morelike': MorelikeCandidateFinder(),

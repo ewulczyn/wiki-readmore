@@ -2,4 +2,6 @@ flask
 requests
 futures
 numpy
+scipy
+sklearn
 python-dateutil

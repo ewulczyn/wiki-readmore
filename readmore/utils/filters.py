@@ -1,6 +1,6 @@
 import itertools
 import requests
-from lib.utils import thread_function, chunk_list
+from .helpers import thread_function, chunk_list
 
 class Filter():
     """

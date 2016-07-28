@@ -58,7 +58,7 @@
             self.fetching = true;
             self.update();
 
-            var url = '/api?s=' + self.source;
+            var url = 'api?s=' + self.source;
 
             var seed;
             if (this.seedArticle.value) {

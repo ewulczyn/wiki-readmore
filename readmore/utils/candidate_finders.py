@@ -18,6 +18,9 @@ class CandidateFinder():
         return []
 
 
+
+
+
 class PageviewCandidateFinder():
     """
     Utility Class for getting a list of the  most 
@@ -102,6 +105,26 @@ class MorelikeCandidateFinder():
             articles.append(a)
 
         return articles[:n]
+
+
+class DeepCandidateFinderAPI():
+    def get_candidates(self, s, seed, n):
+        url = "https://recommend-related-articles.wmflabs.org/types/related_articles/v1/articles"
+        params = {
+            "count":n+1,
+            "seed":seed,
+            "source": s,
+        }
+        results =  requests.get(url, params=params).json()
+        articles = []
+        for i, r in enumerate(results[1:]):
+            a = Article(r['title'])
+            a.rank = i
+            a.wikidata_id = r['wikidata_id']
+            articles.append(a)
+
+        return articles
+
 
 
 class DeepCandidateFinder():

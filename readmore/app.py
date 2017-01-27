@@ -7,7 +7,7 @@ import time
 from flask import Flask, render_template, request, Response
 
 
-from utils.candidate_finders import PageviewCandidateFinder, MorelikeCandidateFinder, DeepCandidateFinder
+from utils.candidate_finders import PageviewCandidateFinder, MorelikeCandidateFinder, DeepCandidateFinder, DeepCandidateFinderAPI
 from utils.embedding import WikiEmbedding
 from utils.filters import apply_filters_chunkwise
 from utils.pageviews import PageviewGetter
@@ -19,13 +19,19 @@ app.config.from_pyfile('readmore.ini')
 app.debug = app.config['DEBUG']
 
 language_pairs = requests.get('https://cxserver.wikimedia.org/v1/languagepairs').json()
+use_api = app.config['USE_RELATED_ARTICLES_API']
 embedding_path = os.path.join('data/%s' % app.config['EMBEDDING'])
+
 
 finder_map = {
     'morelike': MorelikeCandidateFinder(),
     'mostpopular': PageviewCandidateFinder(),
-    'deep': DeepCandidateFinder(WikiEmbedding(embedding_path))
 }
+
+if use_api:
+    finder_map['deep'] = DeepCandidateFinderAPI()
+else:
+    finder_map['deep'] = DeepCandidateFinder(WikiEmbedding(embedding_path))
 
 
 def json_response(dat):
